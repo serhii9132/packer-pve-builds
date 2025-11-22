@@ -37,7 +37,7 @@ SUDO_USER_PASSWORD='$6$example$hashedpasswordhere'  # Use: mkpasswd -m sha-512
 SSH_PUB_KEY='ssh-ed25519 AAAAC3NzaC1... user@host'     # Public SSH key (RSA or ED25519)
 SSH_PRIVATE_KEY_FILE=/home/user/.ssh/id_rsa
 
-ROOT_PASSWORD=''ssh-ed25519 AAAAC3NzaC2... user@host''
+ROOT_PASSWORD='ssh-ed25519 AAAAC3NzaC2... user@host'
 ```
 3. Run the following commands:
 ```sh
@@ -48,3 +48,4 @@ make ubuntu2404
 make almalinux8
 
 ```
+
