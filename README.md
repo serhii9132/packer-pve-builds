@@ -19,7 +19,6 @@ Available OS Images
 ### Tested With
 - Packer: v1.14.3
 - Proxmox VE: 8.4.0
-- 
 
 ### Usage
 1. Clone the repository.
@@ -47,4 +46,5 @@ make ubuntu2404
 
 # Build an AlmaLinux image
 make almalinux8
+
 ```
