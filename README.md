@@ -1,44 +1,50 @@
 ### Overview
-Packer templates for creating Ubuntu VM images on Proxmox VE using the proxmox-iso builder.
+Packer templates for creating VM images on Proxmox VE using the [proxmox-iso](https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox/latest/components/builder/iso) builder.
 All sensitive data is configured using environment variables. See the Usage section for details.
 
+Available OS Images
+- Ubuntu 24.04.3 LTS
+- AlmaLinux 8.10
+
 ### Template details
-- Version OS: 24.04 LTS
 - CPU: 2 cores
-- Disk: 50 Gb
+- Disk: 100 Gb
 - RAM: 4 Gb
 - Partitioning: LVM
 - Swap: Disabled
 - Preinstalled packages: openssh-server, qemu-guest-agent
 - User: with sudo privileges is created without password prompt.
-- Root: Disabled
+- Root: enabled
 
 ### Tested With
-- Packer: v1.14.2
+- Packer: v1.14.3
 - Proxmox VE: 8.4.0
+- 
 
 ### Usage
 1. Clone the repository.
 2. Create a .env file in the root of the project with the following content:
-```
+```sh
 # Proxmox API credentials
-export PROXMOX_NAME_NODE="pve-node"
-export PROXMOX_URL="https://192.168.111.111:8006/api2/json"
-export PROXMOX_USER="packer@pam!packer-token"
-export PROXMOX_TOKEN="aaabbbcc-dd11-ddee-1111-bbbbb1122323"
-export PROXMOX_NAME_DATASTORE='local'
+PROXMOX_NAME_NODE=pve-node
+PROXMOX_URL=https://192.168.111.111:8006/api2/json
+PROXMOX_USER=packer@pam!packer-token
+PROXMOX_TOKEN=aaabbbcc-dd11-ddee-1111-bbbbb1122323
+PROXMOX_NAME_DATASTORE='local'
 
 # SSH user configuration
-export SSH_USERNAME="user"
-export SSH_PASSWORD="password"
-export SSH_PASSWORD_ENCRYPT='$6$example$hashedpasswordhere'  # Use: mkpasswd -m sha-512
-export SSH_PUB_KEY='ssh-ed25519 AAAAC3NzaC1... user@host'     # Public SSH key (RSA or ED25519)
+SUDO_USER=user
+SUDO_USER_PASSWORD='$6$example$hashedpasswordhere'  # Use: mkpasswd -m sha-512
+SSH_PUB_KEY='ssh-ed25519 AAAAC3NzaC1... user@host'     # Public SSH key (RSA or ED25519)
+SSH_PRIVATE_KEY_FILE=/home/user/.ssh/id_rsa
 
-# Host settings
-export VM_HOSTNAME="hostname"
+ROOT_PASSWORD=''ssh-ed25519 AAAAC3NzaC2... user@host''
 ```
 3. Run the following commands:
-```
-source .env
-packer build .
+```sh
+# Build an Ubuntu image
+make ubuntu2404
+
+# Build an AlmaLinux image
+make almalinux8
 ```
