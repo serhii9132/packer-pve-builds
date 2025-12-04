@@ -64,6 +64,7 @@ pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --notempty
 
 %post
 sed -i '/^PermitRootLogin/c\PermitRootLogin prohibit-password' /etc/ssh/sshd_config
+sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
 mkdir /home/${var.sudo_user}/.ssh
 echo -e "${var.ssh_public_key}" > /home/${var.sudo_user}/.ssh/authorized_keys

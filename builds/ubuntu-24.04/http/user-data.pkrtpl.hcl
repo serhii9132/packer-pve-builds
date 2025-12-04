@@ -14,7 +14,7 @@ autoinstall:
 
   ssh:
     install-server: true
-    allow-pw: true
+    allow-pw: false
 
   packages:
     - qemu-guest-agent
@@ -27,7 +27,6 @@ autoinstall:
   late-commands:
     - lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
     - resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
-    - echo "${var.sudo_user} ALL=(ALL:ALL) NOPASSWD:ALL" > /target/etc/sudoers.d/${var.sudo_user}
 
   user-data:
     hostname: ${var.vm_hostname}
@@ -37,6 +36,7 @@ autoinstall:
         shell: /bin/bash
         lock_passwd: False
         groups: sudo
+        sudo: "ALL=(ALL:ALL) NOPASSWD:ALL"
         ssh_authorized_keys:
          - ${var.ssh_public_key}
     chpasswd:
