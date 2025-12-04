@@ -22,6 +22,7 @@ source "proxmox-iso" "ubuntu" {
   sockets                   = var.sockets
   memory                    = var.memory
   scsi_controller           = var.scsi_controller
+  serials                   = var.serials
   communicator              = var.communicator
 
   disks {
@@ -53,13 +54,13 @@ source "proxmox-iso" "ubuntu" {
   qemu_agent                = var.is_qemu_agent
 
   http_content              = local.autoinstall_files
-
+  http_interface            = var.http_interface
+  
   boot_wait                 = var.boot_wait
   boot_command = [
     "e<wait>",
     "<down><down><down>",
     "<end><bs><bs><bs><bs><wait>",
-    # "ip=192.168.0.100::192.168.0.1:255.255.255.0::::8.8.8.8 ",
     "ipv6.disable=1 \"ds=nocloud-net;<wait5>s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/\" <wait5>autoinstall ---<wait>",
     "<f10><wait>"
   ]
@@ -67,4 +68,13 @@ source "proxmox-iso" "ubuntu" {
 
 build {
   sources = ["sources.proxmox-iso.ubuntu"]
+
+  provisioner "shell" {
+    inline = [
+      "sudo apt -y autoremove --purge",
+      "sudo apt -y clean",
+      "sudo apt -y autoclean",
+      "sudo cloud-init clean --logs --machine-id"
+    ]
+  }
 }

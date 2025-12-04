@@ -22,6 +22,7 @@ source "proxmox-iso" "ubuntu" {
   sockets                   = var.sockets
   memory                    = var.memory
   scsi_controller           = var.scsi_controller
+  serials                   = var.serials
   communicator              = var.communicator
 
   disks {
@@ -53,11 +54,19 @@ source "proxmox-iso" "ubuntu" {
   qemu_agent                = var.is_qemu_agent
 
   http_content              = local.autoinstall_files
+  http_interface            = var.http_interface
 
   boot_wait                 = var.boot_wait
-  boot_command = ["<up><tab><wait> inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart.cfg <wait5><enter>"]
+  boot_command              = ["<up><tab><wait> inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart.cfg <wait5><enter>"]
 }
 
 build {
   sources = ["sources.proxmox-iso.ubuntu"]
+
+  provisioner "shell" {
+    inline = [
+      "sudo dnf clean all",
+      "sudo truncate -s 0 /etc/machine-id"
+    ]
+  }
 }
