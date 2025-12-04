@@ -6,6 +6,7 @@ cores = 2
 sockets = 1
 memory = 4096
 scsi_controller = "virtio-scsi-single"
+serials = ["socket"]
 
 communicator = "ssh"
 

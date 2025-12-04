@@ -3,7 +3,7 @@ locals {
   name_iso_file = "ubuntu-24.04.3-live-server-amd64.iso"
   iso_url = "https://releases.ubuntu.com/noble/${local.name_iso_file}"
   
-  http_dir = "/http"
+  http_dir = "http"
   autoinstall_files = {
       "/meta-data" = file("./${local.http_dir}/meta-data")
       "/user-data" = templatefile("./${local.http_dir}/user-data.pkrtpl.hcl", { var = var })
@@ -41,6 +41,10 @@ variable "memory" {
 
 variable "scsi_controller" {
   type = string
+}
+
+variable "serials"{
+  type = list(string)
 }
 
 variable "communicator" {
@@ -85,6 +89,11 @@ variable "ssh_timeout" {
 
 variable "is_qemu_agent" {
   type = bool
+}
+
+variable "http_interface" {
+  type = string
+  default = env("HTTP_INTERFACE")
 }
 
 variable "boot_wait" {
