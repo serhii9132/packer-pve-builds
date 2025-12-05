@@ -19,6 +19,7 @@ autoinstall:
   packages:
     - qemu-guest-agent
     - rsync
+    - bash-completion
 
   timezone: "Europe/Kyiv"
 
@@ -36,7 +37,7 @@ autoinstall:
         shell: /bin/bash
         lock_passwd: False
         groups: sudo
-        sudo: "ALL=(ALL:ALL) NOPASSWD:ALL"
+        sudo: "ALL=(ALL) NOPASSWD:ALL"
         ssh_authorized_keys:
          - ${var.ssh_public_key}
     chpasswd:

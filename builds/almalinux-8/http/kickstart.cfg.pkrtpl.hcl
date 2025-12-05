@@ -25,6 +25,7 @@ reboot
 # @standard
 kexec-tools
 qemu-guest-agent
+bash-completion
 
 %end
 
@@ -71,7 +72,7 @@ echo -e "${var.ssh_public_key}" > /home/${var.sudo_user}/.ssh/authorized_keys
 chown -R ${var.sudo_user}:${var.sudo_user} /home/${var.sudo_user}/.ssh
 chmod 700 /home/${var.sudo_user}/.ssh
 chmod 600 /home/${var.sudo_user}/.ssh/authorized_keys
-echo "${var.sudo_user} ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/${var.sudo_user}
+echo "${var.sudo_user} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${var.sudo_user}
 chmod 440 /etc/sudoers.d/${var.sudo_user}
 
 %end
