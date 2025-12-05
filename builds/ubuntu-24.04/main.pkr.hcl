@@ -71,10 +71,25 @@ build {
 
   provisioner "shell" {
     inline = [
+      "sudo rm -f /etc/ssh/ssh_host_*",
       "sudo apt -y autoremove --purge",
       "sudo apt -y clean",
       "sudo apt -y autoclean",
-      "sudo cloud-init clean --logs --machine-id"
+      "sudo cloud-init clean --logs --machine-id --seed"
+    ]
+  }
+
+  provisioner "file" {
+    source = "./files/regenerate_ssh_host_keys.service"
+    destination = "/tmp/regenerate_ssh_host_keys.service"
+  }
+
+  provisioner "shell" {
+    inline = [
+      "sudo cp /tmp/regenerate_ssh_host_keys.service /etc/systemd/system/regenerate-ssh-host-keys.service",
+      "sudo chown root:root /etc/systemd/system/regenerate-ssh-host-keys.service",
+      #"sudo systemd daemon-reload",
+      "sudo systemctl enable regenerate-ssh-host-keys.service"
     ]
   }
 }

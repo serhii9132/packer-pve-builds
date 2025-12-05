@@ -65,6 +65,7 @@ build {
 
   provisioner "shell" {
     inline = [
+      "sudo rm -f /etc/ssh/ssh_host_*",
       "sudo dnf clean all",
       "sudo truncate -s 0 /etc/machine-id"
     ]
