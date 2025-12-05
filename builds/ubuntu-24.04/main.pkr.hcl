@@ -89,7 +89,8 @@ build {
       "sudo cp /tmp/regenerate_ssh_host_keys.service /etc/systemd/system/regenerate-ssh-host-keys.service",
       "sudo chown root:root /etc/systemd/system/regenerate-ssh-host-keys.service",
       #"sudo systemd daemon-reload",
-      "sudo systemctl enable regenerate-ssh-host-keys.service"
+      "sudo systemctl enable regenerate-ssh-host-keys.service",
+      "sudo rm /tmp/regenerate_ssh_host_keys.service"
     ]
   }
 }
