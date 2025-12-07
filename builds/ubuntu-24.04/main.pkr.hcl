@@ -75,7 +75,10 @@ build {
       "sudo apt -y autoremove --purge",
       "sudo apt -y clean",
       "sudo apt -y autoclean",
-      "sudo cloud-init clean --logs --machine-id --seed"
+      "sudo truncate -s 0 /etc/machine-ide",
+      "sudo rm -f /var/lib/dbus/machine-id",
+      "sudo ln -s /etc/machine-id /var/lib/dbus/machine-id",
+      "sudo cloud-init clean --logs --seed"
     ]
   }
 

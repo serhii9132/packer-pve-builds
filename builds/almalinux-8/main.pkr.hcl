@@ -67,7 +67,9 @@ build {
     inline = [
       "sudo rm -f /etc/ssh/ssh_host_*",
       "sudo dnf clean all",
-      "sudo truncate -s 0 /etc/machine-id"
+      "sudo truncate -s 0 /etc/machine-id",
+      "sudo rm -f /var/lib/dbus/machine-id",
+      "sudo ln -s /etc/machine-id /var/lib/dbus/machine-id",
     ]
   }
 }
